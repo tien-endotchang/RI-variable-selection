@@ -1,30 +1,47 @@
-# Best Subset Selection and Related Tools
-## Trevor Hastie, Rob Tibshirani, Ryan Tibshirani
-### Maintained by Ryan Tibshirani
+# Variable Selection Using Relative Importance Ranking
 
-This project contains an implementation of best subset selection in
-regression, based on a mixed integer quadratic program formulation of
-the subset selection problem and the Gurobi mixed integer program 
-optimizer. It also contains tools for running simulations comparing
-best subset selection to the lasso and forward stepwise selection.
+This repository contains the codes for the paper:
 
-The mixed integer programming formulation of subset selection and
-simulation setup is based on the paper: Bertsimas, King, Mazumder
-(2016), "Best subset selection via a modern optimization lens".
+**Chang, T.-E. & Chen, A.** (2025). *Variable Selection Using Relative Importance Ranking.*  [Link to paper coming soon]
 
-For our discussion paper on best subset selection, forward stepwise,
-and the lasso, see: https://arxiv.org/abs/1707.08692.
+We propose a class of filter-based variable selection methods built on **Relative Importance (RI)** measures, including General Dominance (GD), Comprehensive Relative Importance (CRI), and a new computationally efficient variant, **CRI.Z**. Our methods are robust to multicollinearity and competitive with state-of-the-art approaches like the lasso and relaxed lasso.
 
-### Install the R package
+---
 
-To install the bestsubset R package directly from github, run the
-following in R: 
+## Installation
 
-```{r}
-library(devtools)
-install_github(repo="ryantibs/best-subset", subdir="bestsubset")
+Make sure you have the following installed:
+1.  **R (>= 4.0.0)**
+2.  **R packages:** `glmnet`, `relaimpo`, `care`, `ggplot2`, `ggh4x` etc.
+    You can install all required packages with:
+    ```r
+    install.packages(c("glmnet", "relaimpo", "care", "ggplot2", "ggh4x"))
+    ```
+3. Make sure to set your working directory `~/RI-variable-selection/`.
+
+---
+
+## Run Simulations
+
+Run the following R scripts from the `main/` directory.
+
+### 1. Part 1: Variable Ranking (Section 4.2 of paper)
+```r
+source("main/part1_ranking/sim.lo.select.R")
+source("main/part1_ranking/sim.med.select.R")
+source("main/part1_ranking/sim.hi50.select.R")
+source("main/part1_ranking/sim.hi100.select.R")
 ```
 
-sim.xy -> sim.xy.ext
-sim.master -> sim.master.sel and sim.master.ext
-src add matrixcomps.dll
+### 2. Part 2: Modeling (Section 4.3 of paper)
+```r
+source("main/part2_modeling/sim.lo.R")
+source("main/part2_modeling/sim.med.R")
+source("main/part2_modeling/sim.hi50.R")
+source("main/part2_modeling/sim.hi100.R")
+```
+
+## Results
+Running the above scripts will create a `results/` folder containing:
+* `fig/`: all generated simulation plots (`.pdf`)
+* `res.`: `.RDS` files containing raw simulation ouputs
