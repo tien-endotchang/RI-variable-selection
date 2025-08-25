@@ -114,7 +114,7 @@ ggplot(dat, aes(x=x,y=y,color=Method)) +
   geom_line(lwd=0.5, color="black", linetype=3, aes(x,x)) +
   geom_line(lwd=1) + geom_point(pch=19) +
     theme_bw() + theme(legend.just=c(1,0), legend.pos=c(0.95,0.05))
-ggsave("fig/df1.pdf", height=6, width=6.4, device="pdf")
+ggsave("results/fig/df1.pdf", height=6, width=6.4, device="pdf")
 
 cbbPalette = c("Best subset" = "#F8766D", 
                "Forward stepwise" = "#7CAE00",
@@ -148,5 +148,5 @@ ggplot(dat, aes(x=x,y=y,color=Method)) +
   theme_bw() + theme(legend.just=c(1,0), legend.pos=c(0.95,0.05)) +
   scale_colour_manual(values = cbbPalette)
 
-ggsave("fig/df2.pdf", height=4, width=6, device="pdf")
+ggsave("results/fig/df2.pdf", height=4, width=6, device="pdf")
 
