@@ -2,7 +2,7 @@
 
 This repository contains the codes for the paper:
 
-**Chang, T.-E. & Chen, A.** (2025). *Variable Selection Using Relative Importance Ranking.*  [Link to paper coming soon]
+**Tien-En Chang & Argon Chen (2025). Variable Selection Using Relative Importance Ranking.**  [Link to paper coming soon]
 
 We propose a class of filter-based variable selection methods built on **Relative Importance (RI)** measures, including General Dominance (GD), Comprehensive Relative Importance (CRI), and a new computationally efficient variant, **CRI.Z**. Our methods are robust to multicollinearity and competitive with state-of-the-art approaches like the lasso and relaxed lasso.
 
@@ -11,13 +11,14 @@ We propose a class of filter-based variable selection methods built on **Relativ
 ## Installation
 
 Make sure you have the following installed:
-1.  **R (>= 4.0.0)**
-2.  **R packages:** `glmnet`, `relaimpo`, `care`, `ggplot2`, `ggh4x` etc.
+*  R (>= 4.0.0)
+*  R packages: `glmnet`, `relaimpo`, `care`, `ggplot2`, `ggh4x` etc.
+
     You can install all required packages with:
     ```r
     install.packages(c("glmnet", "relaimpo", "care", "ggplot2", "ggh4x"))
     ```
-3. Make sure to set your working directory `~/RI-variable-selection/`.
+* Make sure to set your working directory `~/RI-variable-selection/`.
 
 ---
 
@@ -45,3 +46,5 @@ source("main/part2_modeling/sim.hi100.R")
 Running the above scripts will create a `results/` folder containing:
 * `fig/`: all generated simulation plots (`.pdf`)
 * `res.`: `.RDS` files containing raw simulation ouputs
+
+---
