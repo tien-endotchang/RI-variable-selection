@@ -2,7 +2,7 @@
 
 This repository contains the codes for the paper:
 
-**Tien-En Chang & Argon Chen (2025). Variable Selection Using Relative Importance Ranking.**  [Link to paper coming soon]
+**Tien-En Chang & Argon Chen (2025). Variable Selection Using Relative Importance Ranking.**  
 
 We propose a class of filter-based variable selection methods built on **Relative Importance (RI)** measures, including General Dominance (GD), Comprehensive Relative Importance (CRI), and a new computationally efficient variant, **CRI.Z**. Our methods are robust to multicollinearity and competitive with state-of-the-art approaches like the lasso and relaxed lasso.
 
