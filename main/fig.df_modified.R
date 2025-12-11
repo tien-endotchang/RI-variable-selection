@@ -116,21 +116,21 @@ ggplot(dat, aes(x=x,y=y,color=Method)) +
     theme_bw() + theme(legend.just=c(1,0), legend.pos=c(0.95,0.05))
 ggsave("results/fig/df1.pdf", height=6, width=6.4, device="pdf")
 
-cbbPalette = c("Best subset" = "#F8766D", 
-               "Forward stepwise" = "#7CAE00",
-               "Lasso" = "#00BFC4", 
-               "Relaxed lasso: 0.5" = "#C77CFF",
-               "Relaxed lasso: 0" = "#6600CC",
+cbbPalette = c("Best subset" = "#F8766D75", 
+               "Forward stepwise" = "#7CAE0075",
+               "Lasso" = "#00BFC475", 
+               "Relaxed lasso: 0.5" = "#C77CFF75",
+               "Relaxed lasso: 0" = "#6600CC75",
                "LS-GD" = "#000000",
                "LS-CRI" = "#FF0000",
                "LS-CRI.Z" = "#0000FF",
                "LS-CAR" = "#3399FF",
-               "LS-SIS" = "#FF9900",
+               "LS-SIS" = "#FF990075",
                "Ridge-GD" = "#999999",
                "Ridge-CRI" = "#FF61CC",
                "Ridge-CRI.Z" = "#3366FF",
                "Ridge-CAR" = "#99CCFF",
-               "Ridge-SIS" = "#FFCC00"
+               "Ridge-SIS" = "#FFCC0075"
 )
 dat = data.frame(x=rep(0:p,8),
                  y=c(df.bs,df.fs,df.las[,1],df.las[,5],df.las[,9],
@@ -140,13 +140,15 @@ dat = data.frame(x=rep(0:p,8),
                                      "LS-CRI", "LS-CRI.Z","LS-SIS"),
                                     rep(p+1,8))))
 
-ggplot(dat, aes(x=x,y=y,color=Method)) +
+shape_set = c(rep(19, 3), rep(15, 2), rep(19, 3))
+ggplot(dat, aes(x=x,y=y,color=Method,shape=Method)) +
   xlab("Number of nonzero coefficients") +
   ylab("Degrees of freedom") +
   geom_line(lwd=0.5, color="black", linetype=3, aes(x,x)) +
-  geom_line(lwd=1) + geom_point(pch=19) +
+  geom_line(lwd=1) + geom_point() +
   theme_bw() + theme(legend.just=c(1,0), legend.pos=c(0.95,0.05)) +
-  scale_colour_manual(values = cbbPalette)
+  scale_colour_manual(values = cbbPalette) +
+  scale_shape_manual(values=shape_set)
 
 ggsave("results/fig/df2.pdf", height=4, width=6, device="pdf")
 

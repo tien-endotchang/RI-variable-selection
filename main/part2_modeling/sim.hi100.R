@@ -114,43 +114,21 @@ method.nums = c(1:7)
 method.names = c("Lasso","Forward stepwise",
                  "Relaxed lasso",
                  "LS-CRI","LS-CRI.Z","LS-CAR","LS-SIS")
+pch = c(rep(19, 3), rep(15, 3), 19)
 
 plot.from.file.mod(file.list, what="error", rel.to=NULL, tuning="val",
                    method.nums=method.nums, method.names=method.names,
-                   main=paste0("n=",n,", p=",p,", s=",s), make.pdf=TRUE,
+                   main=paste0("n=",n,", p=",p,", s=",s), pch=pch, make.pdf=TRUE,
                    fig.dir=fig_dir, w=6.5, h=7, lwd=0.75, subset=FALSE,
                    file.name=paste0("sim.n",n,".p",p,".val.err.rel.sub"))
 
 plot.from.file.mod(file.list, what="F", tuning="val",
                    method.nums=method.nums, method.names=method.names,
-                   main=paste0("n=",n,", p=",p,", s=",s), make.pdf=TRUE,
+                   main=paste0("n=",n,", p=",p,", s=",s), pch=pch, make.pdf=TRUE,
                    fig.dir=fig_dir, w=6.5, h=7, lwd=0.75, subset=FALSE,
                    file.name=paste0("sim.n",n,".p",p,".val.F.sub"))
 
 # Full
-n = 100; p = 1000
-fig_dir = sprintf("results/fig/part2/")
-dir.create(file.path(fig_dir), showWarnings = TRUE, recursive=TRUE)
-file.list = paste0("results/rds/part2/hi100/", list.files("results/rds/part2/hi100/"))
-
-method.nums = c(1:7)
-method.names = c("Lasso","Forward stepwise",
-                 "Relaxed lasso",
-                 "LS-CRI","LS-CRI.Z","LS-CAR","LS-SIS")
-
-plot.from.file.mod(file.list, what="error", rel.to=NULL, tuning="val",
-                   method.nums=method.nums, method.names=method.names,
-                   main=paste0("n=",n,", p=",p,", s=",s), make.pdf=TRUE,
-                   fig.dir=fig_dir, w=10, h=10, lwd=0.5, subset=FALSE,
-                   file.name=paste0("sim.n",n,".p",p,".val.err.rel.LS"))
-
-plot.from.file.mod(file.list, what="F", tuning="val",
-                   method.nums=method.nums, method.names=method.names,
-                   main=paste0("n=",n,", p=",p,", s=",s), make.pdf=TRUE,
-                   fig.dir=fig_dir, w=10, h=10, lwd=0.5, subset=FALSE,
-                   file.name=paste0("sim.n",n,".p",p,".val.F.LS"))
-
-# Add Ridge-RIs
 n = 100; p = 1000
 fig_dir = sprintf("results/fig/part2/")
 dir.create(file.path(fig_dir), showWarnings = TRUE, recursive=TRUE)
@@ -161,15 +139,16 @@ method.names = c("Lasso","Forward stepwise",
                  "Relaxed lasso",
                  "LS-CRI","LS-CRI.Z","LS-CAR","LS-SIS",
                  "Ridge-CRI","Ridge-CRI.Z","Ridge-CAR","Ridge-SIS")
+pch = c(rep(19, 3), rep(15, 3), 19, rep(15, 3), 19)
 
 plot.from.file.mod(file.list, what="error", rel.to=NULL, tuning="val",
                    method.nums=method.nums, method.names=method.names,
-                   main=paste0("n=",n,", p=",p,", s=",s), make.pdf=TRUE,
+                   main=paste0("n=",n,", p=",p,", s=",s), pch=pch, make.pdf=TRUE,
                    fig.dir=fig_dir, w=10, h=10, lwd=0.5, subset=FALSE,
                    file.name=paste0("sim.n",n,".p",p,".val.err.rel"))
 
 plot.from.file.mod(file.list, what="F", tuning="val",
                    method.nums=method.nums, method.names=method.names,
-                   main=paste0("n=",n,", p=",p,", s=",s), make.pdf=TRUE,
+                   main=paste0("n=",n,", p=",p,", s=",s), pch=pch, make.pdf=TRUE,
                    fig.dir=fig_dir, w=10, h=10, lwd=0.5, subset=FALSE,
                    file.name=paste0("sim.n",n,".p",p,".val.F"))

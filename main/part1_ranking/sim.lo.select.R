@@ -72,11 +72,29 @@ for (beta.type in type.vec) {
 
 fig_dir = sprintf("results/fig/part1/")
 dir.create(fig_dir, showWarnings = TRUE, recursive=TRUE)
-w=12 
-h=6  
 
 problem = "lo"
 n = 100; p = 10 
+
+# Subset
+w=10
+h=6  
+foldername = paste0("results/rds/part1/",problem,"/")
+dat = load_simulation_data(n, p, type.vec, rho.vec[-2], snr.vec, SIM.TYPE, "minsize", foldername)
+dat = dat[dat$method != "CAR", ]
+gp_low_s = plot_simulation(dat, paste0("n=", n, ", p=", p), n, p, "minsize")
+ggsave(sprintf("%s%s.pdf", fig_dir, paste0("sim.", problem, ".S.sub")),
+       height=h, width=w, device="pdf")
+
+dat = load_simulation_data(n, p, type.vec, rho.vec[-2], snr.vec, SIM.TYPE, "prop", foldername)
+dat = dat[dat$method != "CAR", ]
+gp_low_pr = plot_simulation(dat, paste0("n=", n, ", p=", p), n, p, "prop")
+ggsave(sprintf("%s%s.pdf", fig_dir, paste0("sim.", problem, ".Pr.sub")),
+       height=h, width=w, device="pdf")
+
+# Full
+w=12 
+h=6  
 foldername = paste0("results/rds/part1/",problem,"/")
 dat = load_simulation_data(n, p, type.vec, rho.vec, snr.vec, SIM.TYPE, "minsize", foldername)
 dat = dat[dat$method != "CAR", ]

@@ -54,11 +54,7 @@ ridgeGD = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nla
     
     if(k == 1){
       beta_temp = matrix(0, p, 1)
-      if (intercept) {
-        beta_temp[A, 1] = lsfit(x0[, A], y0)$coef 
-      } else {
-        beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
-      }
+      beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
       df[k + 1] = 1
     } else {
       beta_temp = matrix(0, p, nlambda)
@@ -96,7 +92,11 @@ ridgeGD = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nla
 }
 
 coef.ridgeGD = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 predict.ridgeGD = function(object, newx, s, ...) {
@@ -126,10 +126,10 @@ ridgecri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
   y = as.numeric(y)
   n = nrow(x)
   p = ncol(x)
-
+  
   # Check input data
   check.xy(x=x,y=y)
-
+  
   # Save original x and y
   x0 = x
   y0 = y
@@ -141,18 +141,18 @@ ridgecri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
   bx = obj$bx
   by = obj$by
   sx = obj$sx
-
+  
   # Things to keep track of, and return at the end
   buf = min(maxsteps, 500)
   action = numeric(buf)                      # Actions taken
   df = c() # Degrees of freedom
   beta = matrix(0, p, 1)                     # FS estimates
-
+  
   # Record action, df, solution (df and solution are here
   df[1] = 0
   beta[,1] = 0
   cri_order = order(cri(x, y), decreasing = T)
-
+  
   # Other things to keep track of, but not return
   r = 0                       # Size of active set
   A = c()                     # Active set
@@ -166,11 +166,7 @@ ridgecri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
     
     if(k == 1){
       beta_temp = matrix(0, p, 1)
-      if (intercept) {
-        beta_temp[A, 1] = lsfit(x0[, A], y0)$coef 
-      } else {
-        beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
-      }
+      beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
       df[k + 1] = 1
     } else {
       beta_temp = matrix(0, p, nlambda)
@@ -187,7 +183,7 @@ ridgecri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
     if (verbose) {
       cat(sprintf("\n%i. Added variable %i, |A|=%i...", k, A[r], r))
     }
-
+    
     # Update counter
     k = k + 1
   }
@@ -195,12 +191,12 @@ ridgecri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
   # we do not include the OLS
   completepath = FALSE
   bls = NULL
-
+  
   if (verbose) cat("\n")
-
+  
   # Assign column names
   colnames(beta) = as.character(c(0, 1, rep(Seq(2, k-1), each = nlambda)))
-
+  
   out = list(action=action,df=df,beta=beta,completepath=completepath,bls=bls,lambda=lambda_storage,
              x=x0,y=y0,bx=bx,by=by,intercept=intercept,normalize=normalize)
   class(out) = "ridgecri"
@@ -208,14 +204,18 @@ ridgecri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
 }
 
 coef.ridgecri = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 predict.ridgecri = function(object, newx, s, ...) {
   beta = coef.ridgecri(object,s)
   if (missing(newx)) newx = object$x
   else newx = matrix(newx,ncol=ncol(object$x))
-
+  
   newx = scale(newx,object$bx,FALSE)
   if (object$intercept) newx = cbind(rep(1,nrow(newx)),newx)
   return(newx %*% beta)
@@ -225,7 +225,7 @@ predict.ridgecri = function(object, newx, s, ...) {
 
 # CRI-Z
 ridgecriz = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nlambda = 10,
-                    lambda = NULL, intercept = TRUE, normalize = TRUE, verbose = FALSE) {
+                     lambda = NULL, intercept = TRUE, normalize = TRUE, verbose = FALSE) {
   
   # Check for glmnet package
   if (!require("glmnet",quietly=TRUE)) {
@@ -277,11 +277,7 @@ ridgecriz = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), n
     
     if(k == 1){
       beta_temp = matrix(0, p, 1)
-      if (intercept) {
-        beta_temp[A, 1] = lsfit(x0[, A], y0)$coef 
-      } else {
-        beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
-      }
+      beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
       df[k + 1] = 1
     } else {
       beta_temp = matrix(0, p, nlambda)
@@ -319,7 +315,11 @@ ridgecriz = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), n
 }
 
 coef.ridgecriz = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 predict.ridgecriz = function(object, newx, s, ...) {
@@ -336,7 +336,7 @@ predict.ridgecriz = function(object, newx, s, ...) {
 
 # CAR
 ridgecar = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nlambda = 10,
-                     lambda = NULL, intercept = TRUE, normalize = TRUE, verbose = FALSE) {
+                    lambda = NULL, intercept = TRUE, normalize = TRUE, verbose = FALSE) {
   
   # Check for glmnet package
   if (!require("glmnet",quietly=TRUE)) {
@@ -388,11 +388,7 @@ ridgecar = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
     
     if(k == 1){
       beta_temp = matrix(0, p, 1)
-      if (intercept) {
-        beta_temp[A, 1] = lsfit(x0[, A], y0)$coef 
-      } else {
-        beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
-      }
+      beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
       df[k + 1] = 1
     } else {
       beta_temp = matrix(0, p, nlambda)
@@ -430,7 +426,11 @@ ridgecar = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
 }
 
 coef.ridgecar = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 predict.ridgecar = function(object, newx, s, ...) {
@@ -499,11 +499,7 @@ ridgeSIS = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
     
     if(k == 1){
       beta_temp = matrix(0, p, 1)
-      if (intercept) {
-        beta_temp[A, 1] = lsfit(x0[, A], y0)$coef 
-      } else {
-        beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
-      }
+      beta_temp[A, 1] = lsfit(x0[, A], y0, int = FALSE)$coef
       df[k + 1] = 1
     } else {
       beta_temp = matrix(0, p, nlambda)
@@ -541,7 +537,11 @@ ridgeSIS = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000), nl
 }
 
 coef.ridgeSIS = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 predict.ridgeSIS = function(object, newx, s, ...) {

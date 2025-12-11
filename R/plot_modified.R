@@ -15,7 +15,7 @@ plot.from.file.mod = function(file.list,
                           method.nums=NULL, method.names=NULL,
                           what=c("error","risk","prop","F","nonzero"), rel.to=NULL,
                           tuning=c("validation","oracle"), type=c("ave","med"),
-                          std=TRUE, lwd=1, pch=19, main=NULL, ylim=NULL,
+                          std=TRUE, lwd=1, pch, main=NULL, ylim=NULL,
                           legend.pos=c("bottom","right","top","left","none"),
                           make.pdf=FALSE, fig.dir=".", file.name="sim",
                           w=8, h=10, subset=FALSE) {
@@ -117,23 +117,23 @@ plot.from.file.mod = function(file.list,
   
   dat = data.frame(x=xvec, y=yvec, se=ybar,
                    beta=beta.vec, rho=rho.vec, snr=snr.vec,
-                   Method=factor(rep(method.names, length=length(xvec))))
+                   Method=factor(rep(method.names, length=length(xvec)), levels=method.names))
   
-  cbbPalette = c("Best subset" = "#F8766D", 
-                 "Forward stepwise" = "#7CAE00",
-                 "Lasso" = "#00BFC4", 
-                 "Relaxed lasso" = "#C77CFF",
-                 "RELAXED lasso" = "#6600CC",
+  cbbPalette = c("Best subset" = "#F8766D60", 
+                 "Forward stepwise" = "#7CAE0060",
+                 "Lasso" = "#00BFC460", 
+                 "Relaxed lasso" = "#C77CFF60",
+                 "RELAXED lasso" = "#6600CC60",
                  "LS-GD" = "#000000",
                  "LS-CRI" = "#FF0000",
                  "LS-CRI.Z" = "#0000FF",
                  "LS-CAR" = "#3399FF",
-                 "LS-SIS" = "#FF9900",
+                 "LS-SIS" = "#FF990060",
                  "Ridge-GD" = "#999999",
                  "Ridge-CRI" = "#FF61CC",
                  "Ridge-CRI.Z" = "#3366FF",
                  "Ridge-CAR" = "#99CCFF",
-                 "Ridge-SIS" = "#FFCC00"
+                 "Ridge-SIS" = "#FFCC0060"
   )
   
   gp = ggplot(dat, aes(x=x,y=y,color=Method,linetype=Method,shape=Method)) +
@@ -142,13 +142,12 @@ plot.from.file.mod = function(file.list,
     theme_bw() + theme(legend.position=legend.pos) +
     scale_colour_manual(values = cbbPalette)
   
+  shape_set = pch
   if(subset){
-    shape_set = c(rep(pch, length(method.names)-1), 20)
     linetype_set = c(rep(1, length(method.names)-1), 2)
     gp = gp + scale_linetype_manual(values=linetype_set) +
       scale_shape_manual(values=shape_set)
   }else{
-    shape_set = rep(pch, length(method.names))
     linetype_set = rep(1, length(method.names))
     gp = gp + scale_linetype_manual(values=linetype_set) +
       scale_shape_manual(values=shape_set)

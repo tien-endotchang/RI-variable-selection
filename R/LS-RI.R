@@ -46,8 +46,7 @@ lsGD = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
     r = r + 1
     A = c(A, GD_order[r])
     action[k] = GD_order[r]
-    if (intercept) beta[A, k + 1] = lsfit(x[, A], y)$coef
-    else beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
+    beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
     
     if (verbose) {
       cat(sprintf("\n%i. Added variable %i, |A|=%i...", k, A[r], r))
@@ -90,7 +89,11 @@ lsGD = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
 
 
 coef.lsGD = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 
@@ -108,7 +111,7 @@ predict.lsGD = function(object, newx, s, ...) {
 
 # CRI
 lscri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
-              intercept = TRUE, normalize = TRUE, verbose = FALSE) {
+                 intercept = TRUE, normalize = TRUE, verbose = FALSE) {
   
   # Set up data
   x = as.matrix(x)
@@ -152,8 +155,7 @@ lscri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
     r = r + 1
     A = c(A, cri_order[r])
     action[k] = cri_order[r]
-    if (intercept) beta[A, k + 1] = lsfit(x[, A], y)$coef
-    else beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
+    beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
     
     if (verbose) {
       cat(sprintf("\n%i. Added variable %i, |A|=%i...", k, A[r], r))
@@ -167,7 +169,7 @@ lscri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
   # Trim
   action = action[Seq(1,k-1)]
   df = df[Seq(1,k)]
-
+  
   # If we stopped short of the complete path, then note this
   if (k-1 < min(n-intercept,p)) {
     completepath = FALSE
@@ -193,8 +195,15 @@ lscri = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
   return(out)
 }
 
+# coef.lscri = function(object, s, ...) {
+#   return( object$beta )
+# }
 coef.lscri = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 predict.lscri = function(object, newx, s, ...) {
@@ -229,7 +238,7 @@ cri = function(x, y){
 
 # CRI-Z
 lscriz = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
-                 intercept = TRUE, normalize = TRUE, verbose = FALSE) {
+                  intercept = TRUE, normalize = TRUE, verbose = FALSE) {
   
   # Set up data
   x = as.matrix(x)
@@ -273,8 +282,7 @@ lscriz = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
     r = r + 1
     A = c(A, criz_order[r])
     action[k] = criz_order[r]
-    if (intercept) beta[A, k + 1] = lsfit(x[, A], y)$coef
-    else beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
+    beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
     
     if (verbose) {
       cat(sprintf("\n%i. Added variable %i, |A|=%i...", k, A[r], r))
@@ -315,7 +323,11 @@ lscriz = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
 }
 
 coef.lscriz = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 predict.lscriz = function(object, newx, s, ...) {
@@ -346,7 +358,7 @@ criz = function(x, y){
 # CAR
 library(care)
 lscar = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
-                  intercept = TRUE, normalize = TRUE, verbose = FALSE) {
+                 intercept = TRUE, normalize = TRUE, verbose = FALSE) {
   
   # Set up data
   x = as.matrix(x)
@@ -390,8 +402,7 @@ lscar = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
     r = r + 1
     A = c(A, car_order[r])
     action[k] = car_order[r]
-    if (intercept) beta[A, k + 1] = lsfit(x[, A], y)$coef
-    else beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
+    beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
     
     if (verbose) {
       cat(sprintf("\n%i. Added variable %i, |A|=%i...", k, A[r], r))
@@ -432,7 +443,11 @@ lscar = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
 }
 
 coef.lscar = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 predict.lscar = function(object, newx, s, ...) {
@@ -493,8 +508,7 @@ lsSIS = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
     r = r + 1
     A = c(A, SIS_order[r])
     action[k] = SIS_order[r]
-    if (intercept) beta[A, k + 1] = lsfit(x[, A], y)$coef
-    else beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
+    beta[A, k + 1] = lsfit(x[, A], y, int = FALSE)$coef
     
     if (verbose) {
       cat(sprintf("\n%i. Added variable %i, |A|=%i...", k, A[r], r))
@@ -537,7 +551,11 @@ lsSIS = function(x, y, maxsteps = min(nrow(x) - intercept, ncol(x), 2000),
 
 
 coef.lsSIS = function(object, s, ...) {
-  return( object$beta )
+  beta = object$beta
+  if (object$intercept) {
+    beta = rbind("(Intercept)" = object$by, beta)
+  }
+  return(beta)
 }
 
 

@@ -75,12 +75,13 @@ for (beta.type in type.vec) {
 
 fig_dir = sprintf("results/fig/part1/")
 dir.create(fig_dir, showWarnings = TRUE, recursive=TRUE)
-w=12 
-h=6  
 
 problem = "hi50"
 n = 50; p = 1000 
 foldername = paste0("results/rds/part1/",problem,"/")
+
+w=12 
+h=6 
 dat = load_simulation_data(n, p, type.vec, rho.vec, snr.vec, SIM.TYPE, "minsize", foldername)
 gp_low_s = plot_simulation(dat, paste0("n=", n, ", p=", p), n, p, "minsize")
 ggsave(sprintf("%s%s.pdf", fig_dir, paste0("sim.", problem, ".S")),

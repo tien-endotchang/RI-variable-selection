@@ -74,11 +74,12 @@ for (beta.type in type.vec) {
 
 fig_dir = sprintf("results/fig/part1/")
 dir.create(fig_dir, showWarnings = TRUE, recursive=TRUE)
-w=12 
-h=6  
 
 problem = "med"
 n = 500; p = 100 
+
+w=12
+h=6  
 foldername = paste0("results/rds/part1/",problem,"/")
 dat = load_simulation_data(n, p, type.vec, rho.vec, snr.vec, SIM.TYPE, "minsize", foldername)
 dat = dat[dat$method != "CAR", ]
