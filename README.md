@@ -4,7 +4,7 @@ This repository contains the codes and data for the paper:
 
 **Tien-En Chang & Argon Chen (2025). Variable Selection Using Relative Importance Ranking.**  
 
-We propose a class of filter-based variable selection methods built on **Relative Importance (RI)** measures, including General Dominance (GD), Comprehensive Relative Importance (CRI), and a new computationally efficient variant, **CRI.Z**. Our methods are robust to multicollinearity and competitive with state-of-the-art approaches like the lasso and relaxed lasso.
+We propose a class of filter-based variable selection methods built on **Relative Importance (RI)** measures, including General Dominance (GD), Comprehensive Relative Importance (CRI), and a *new*, *computationally efficient* variant, **CRI.Z**. Our methods are robust to multicollinearity and competitive with state-of-the-art approaches like the lasso and relaxed lasso.
 
 ---
 
@@ -22,6 +22,20 @@ Make sure you have the following installed:
 * Make sure to set your working directory `~/RI-variable-selection/`.
 
 ---
+
+## Reproducing Results
+
+The experiments are divided into three parts matching the sections of the manuscript. Run these scripts from the `main/` directory.
+
+### 1. Variable Ranking (Section 4.2)
+Simulations comparing the ranking accuracy of different RI measures.
+
+| Script (`main/part1_ranking/`) | Output Location | Key Figures Generated |
+| :--- | :--- | :--- |
+| `sim.lo.select.R` | `results/rds/part1/lo` | Fig 1 (`sim.lo.S.sub`) |
+| `sim.med.select.R` | `results/rds/part1/med` | Fig 2 (`sim.lo.Pr.sub`) |
+| `sim.hi50.select.R` | `results/rds/part1/hi50` | (Supplementary Figures) |
+| `sim.hi100.select.R` | `results/rds/part1/hi100` | Fig 3-4 (`sim.hi100.S/Pr.sub`) |
 
 ## Run Simulations
 
