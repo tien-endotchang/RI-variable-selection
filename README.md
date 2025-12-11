@@ -21,59 +21,98 @@ Make sure you have the following installed:
     ```
 * Make sure to set your working directory `~/RI-variable-selection/`.
 
+### Setup
+1. Clone or download this repository.
+2. Open R/RStudio.
+3. **Important:** Set your working directory to the project root:
+   ```r
+   setwd("~/RI-variable-selection/")
+   ```
+
 ---
 
-## Reproducing Results
+## Reproduction Instructions
 
-The experiments are divided into three parts matching the sections of the manuscript. Run these scripts from the `main/` directory.
+All analysis scripts are located in the `main/` directory. Results are automatically saved to the `results/` directory.
 
-### 1. Variable Ranking (Section 4.2)
-Simulations comparing the ranking accuracy of different RI measures.
+### 1. Part 1: Variable Ranking (Paper Section 4.2)
+These scripts simulate the ranking capabilities of the proposed methods across low, medium, and high problem dimension settings.
 
-| Script (`main/part1_ranking/`) | Output Location | Key Figures Generated |
-| :--- | :--- | :--- |
-| `sim.lo.select.R` | `results/rds/part1/lo` | Fig 1 (`sim.lo.S.sub`) |
-| `sim.med.select.R` | `results/rds/part1/med` | Fig 2 (`sim.lo.Pr.sub`) |
-| `sim.hi50.select.R` | `results/rds/part1/hi50` | (Supplementary Figures) |
-| `sim.hi100.select.R` | `results/rds/part1/hi100` | Fig 3-4 (`sim.hi100.S/Pr.sub`) |
+| Simulation Setting | Script Path | Output Data (`.rds`) | Output Figure (`.pdf`) |
+| :--- | :--- | :--- | :--- |
+| **low** | `main/part1_ranking/sim.lo.select.R` | `results/rds/part1/lo/` | Figs 1 & 2 |
+| **medium** | `main/part1_ranking/sim.med.select.R` | `results/rds/part1/med/` | *(See Supp. Material)* |
+| **high-50** | `main/part1_ranking/sim.hi50.select.R` | `results/rds/part1/hi50/` | *(See Supp. Material)* |
+| **high-100** | `main/part1_ranking/sim.hi100.select.R` | `results/rds/part1/hi100/` | Figs 3 & 4 |
 
-## Run Simulations
-
-Run the following R scripts from the `main/` directory.
-
-### 1. Part 1: Variable Ranking (Section 4.2 of paper)
+To run all ranking simulations:
 ```r
 source("main/part1_ranking/sim.lo.select.R")
 source("main/part1_ranking/sim.med.select.R")
 source("main/part1_ranking/sim.hi50.select.R")
 source("main/part1_ranking/sim.hi100.select.R")
 ```
-These will generate .rds simulation files in `results/rds/part1/{lo,med,hi50,hi100}` respectively and .pdf figures `results/fig/part1`. Specifically, Figures 1-4 (`sim.lo.S.sub`, `sim.lo.Pr.sub`, `sim.hi100.S.sub` and `sim.hi100.Pr.sub`) are stored in `results/fig/part1`. The rest of figures are shown in Supplementary Material.
 
-### 2. Part 2: Modeling (Section 4.3 of paper)
+### 2. Part 2: Modeling (Paper Section 4.3)
+These scripts evaluate the predictive performance of the selected models.
+
+| Simulation Setting | Script Path | Output Data (`.rds`) | Output Figure (`.pdf`) |
+| :--- | :--- | :--- | :--- |
+| **low** | `main/part2_modeling/sim.lo.R` | `results/rds/part2/lo/` | Figs 5 & 6 |
+| **medium** | `main/part2_modeling/sim.med.R` | `results/rds/part2/med/` | *(See Supp. Material)* |
+| **high-50** | `main/part2_modeling/sim.hi50.R` | `results/rds/part2/hi50/` | *(See Supp. Material)* |
+| **high-100** | `main/part2_modeling/sim.hi100.R` | `results/rds/part2/hi100/` | Figs 7 & 8 |
+
+To run all modeling simulations:
 ```r
 source("main/part2_modeling/sim.lo.R")
 source("main/part2_modeling/sim.med.R")
 source("main/part2_modeling/sim.hi50.R")
 source("main/part2_modeling/sim.hi100.R")
 ```
-These will generate .rds simulation files in `results/rds/part2/{lo,med,hi50,hi100}` respectively and .pdf figures `results/fig/part2`. Specifically, Figures 5-8 (`sim.n100.p10.val.F.sub`, `sim.n100.p10.val.err.rel.sub`, `sim.n100.p1000.val.F.sub` and `sim.n100.p1000.val.err.rel.sub`) are stored in `results/fig/part2`. The rest of figures are shown in Supplementary Material.
 
-### 3. Real-world Dataset Example (Section 5 of paper)
+#### Runtime Analysis
+To generate the summarized running time for Part 1 and Part 2 simulations:
+```r
+source("main/runtime.R")
+```
+**Output:** Tables 2 and 3 in the paper (saved to `results/tab/`).
+
+### 3. Real-world Examples (Paper Section 5)
+We utilize two benchmark gene expression datasets:
+1.  **Leukemia:** (n,p)=(72,7129) from Golub et al. (Science, 1999)
+2.  **Glioma:** (n,p)=(85,22283) from Freije et al. (Cancer Research, 2004)
+
+*Original data obtained from the [Arizona State University Feature Selection Repository](http://featureselection.asu.edu/).*
+
+Run the analysis:
 ```r
 source("main/real-world/real-world.R")
 ```
-This will use real-world datasets in `data/{aml,gli_85}` to run variable selection experiments. These datasets are derived (from `.mat` to `.csv`) from the leukemia dataset of Golub et al. (Science, 1999) and the glioma dataset of Freije et al. (Cancer Research, 2004). The original data were obtained from the public scikit-feature feature selection repository (Arizona State University). This will generate tables and experiment files `results/tab/res.{aml,gli_85}.{csv,rds}, resulting in Tables 2 and 3. 
+**Output:** Tables 4 and 5 in the paper (saved to `results/tab/`).
 
-## Results
-Running the above scripts will create a `results/` folder containing:
-* `fig/`: all generated simulation plots (`.pdf`)
-* `rds/`: `.RDS` files containing raw simulation ouputs
-* `tab/`: table results (running time, real-world examples)
+---
 
-<<<<<<< HEAD
-the summarized running time of part 1 and 2 can be computed by running `main/runtime.R`.
+## Repository Structure
+
+```text
+RI-variable-selection/
+├── data/                    # Datasets (.csv)
+│   ├── aml/                 # Leukemia dataset
+│   └── gli_85/              # Glioma dataset
+├── external/                # Code adapted from HTT (2020)
+├── main/                    # Source code
+│   ├── part1_ranking/       # Section 4.2 simulations
+│   ├── part2_modeling/      # Section 4.3 simulations
+│   ├── real-world/          # Section 5 real-world dataset examples
+│   ├── fig.df_modified      # Generate ECDF (fig 9)
+│   └── runtime.R            # Script to compute summary runtimes
+├── R/                       # Helper functions                               
+├── results/                 # Generated outputs
+│   ├── fig/                 # Plots (.pdf)
+│   ├── rds/                 # Raw simulation objects (.rds)
+│   └── tab/                 # Tables and runtime logs
+└── README.md
+```
+
 ---
-=======
----
->>>>>>> 2dfc1888bd435ac77f45e79ade9ba11b2cdf4fe7
