@@ -63,16 +63,17 @@ load_simulation_data = function(n, p, type.vec, rho.vec, snr.vec, sim.type,
   beta.vecs = factor(beta.vecs)
   rho.vecs = factor(rho.vecs)
   snr.vecs = factor(round(snr.vecs, 2))
-  levels(beta.vecs) = paste("Example", levels(beta.vecs))
+  # levels(beta.vecs) = paste("Example", levels(beta.vecs))
+  levels(beta.vecs) = paste("Beta-type", levels(beta.vecs))
   levels(rho.vecs) = paste("Correlation", levels(rho.vecs))
   levels(snr.vecs) = paste("SNR", levels(snr.vecs))
   xvec = rep(1:p, length(type.vec)*length(rho.vec)*length(snr.vec)*length(sim.obj$prop))
   res = data.frame(xvec=xvec, yvec=yvecs, beta=beta.vecs, rho=rho.vecs, snr=snr.vecs, 
-                   method=factor(method.vecs, levels=c("GD","CRI","CRI.Z","CAR","SIS")))
+                   method=factor(method.vecs, levels=c("SIS","GD","CRI","CAR","CRI.Z")))
   return( res )
 }
 
-plot_simulation = function(data, title, n, p, metric){
+plot_simulation = function(data, title, n, p, metric, linetype_set=NULL){
   if (!require("ggplot2",quietly=TRUE)) {
     stop("Package ggplot2 not installed (required here)!")
   }
@@ -106,9 +107,10 @@ plot_simulation = function(data, title, n, p, metric){
   }else{
     if(p>10) xlim = c(0,50) else xlim = c(0,p)
     gp = ggplot(data = data, aes(x = xvec, y = yvec)) + # x = variable
-      geom_line(aes(color = method, linetype = method), linewidth=0.75) +
+      geom_line(aes(color = method, linetype = method), linewidth=1) +
       facet_nested(beta ~ rho + snr) + 
       scale_color_manual(values = cbbPalette) +
+      scale_linetype_manual(values=linetype_set) +
       theme_bw() + theme(legend.position=legend.pos) +
       ggtitle(title) + coord_cartesian(xlim=xlim) +
       xlab("Number of selected predictors k") + ylab(switch(metric, minsize="Minimal Model Size S",

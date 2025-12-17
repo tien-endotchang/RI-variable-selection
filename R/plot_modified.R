@@ -111,8 +111,8 @@ plot.from.file.mod = function(file.list,
   beta.vec = factor(beta.vec + 3)
   rho.vec = factor(rho.vec)
   snr.vec = factor(snr.vec)
-  # levels(beta.vec) = paste("Beta-type", levels(beta.vec)) ### HERE ###
-  levels(beta.vec) = paste("Example", levels(beta.vec)) ### HERE ###
+  levels(beta.vec) = paste("Beta-type", levels(beta.vec)) ### HERE ###
+  # levels(beta.vec) = paste("Example", levels(beta.vec)) ### HERE ###
   levels(rho.vec) = paste("Correlation", levels(rho.vec))
   
   dat = data.frame(x=xvec, y=yvec, se=ybar,

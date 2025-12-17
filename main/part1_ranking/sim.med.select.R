@@ -87,8 +87,9 @@ gp_low_s = plot_simulation(dat, paste0("n=", n, ", p=", p), n, p, "minsize")
 ggsave(sprintf("%s%s.pdf", fig_dir, paste0("sim.", problem, ".S")),
        height=h, width=w, device="pdf")
 
+linetype_set = c(1,1,1)
 dat = load_simulation_data(n, p, type.vec, rho.vec, snr.vec, SIM.TYPE, "prop", foldername)
 dat = dat[dat$method != "CAR", ]
-gp_low_pr = plot_simulation(dat, paste0("n=", n, ", p=", p), n, p, "prop")
+gp_low_pr = plot_simulation(dat, paste0("n=", n, ", p=", p), n, p, "prop", linetype_set)
 ggsave(sprintf("%s%s.pdf", fig_dir, paste0("sim.", problem, ".Pr")),
        height=h, width=w, device="pdf")

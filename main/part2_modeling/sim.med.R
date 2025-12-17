@@ -101,12 +101,12 @@ fig_dir = sprintf("results/fig/part2/")
 dir.create(file.path(fig_dir), showWarnings = TRUE, recursive=TRUE)
 file.list = paste0("results/rds/part2/med/", list.files("results/rds/part2/med/"))
 
-method.nums = c(1:9)
+method.nums = c(1:3, 6, 9, 4:5, 7:8)
 method.names = c("Lasso","Forward stepwise",
-                 "Relaxed lasso",
-                 "LS-CRI","LS-CRI.Z","LS-SIS",
-                 "Ridge-CRI","Ridge-CRI.Z","Ridge-SIS")
-pch = c(rep(19, 3), rep(15, 2), 19, rep(15, 2), 19)
+                 "Relaxed lasso","LS-SIS","Ridge-SIS",
+                 "LS-CRI","LS-CRI.Z",
+                 "Ridge-CRI","Ridge-CRI.Z")
+pch = c(rep(19, 5), rep(15, 4))
 
 plot.from.file.mod(file.list, what="error", rel.to=NULL, tuning="val",
                    method.nums=method.nums, method.names=method.names,

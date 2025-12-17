@@ -110,11 +110,11 @@ for(f in file.list){
 }
 file.list = setdiff(file.list, remove.list)
 
-method.nums = c(1:7)
+method.nums = c(1:3, 7, 4,6,5)
 method.names = c("Lasso","Forward stepwise",
-                 "Relaxed lasso",
-                 "LS-CRI","LS-CRI.Z","LS-CAR","LS-SIS")
-pch = c(rep(19, 3), rep(15, 3), 19)
+                 "Relaxed lasso","LS-SIS",
+                 "LS-CRI","LS-CAR","LS-CRI.Z")
+pch = c(rep(19, 4), rep(15, 3))
 
 plot.from.file.mod(file.list, what="error", rel.to=NULL, tuning="val",
                    method.nums=method.nums, method.names=method.names,
@@ -134,12 +134,12 @@ fig_dir = sprintf("results/fig/part2/")
 dir.create(file.path(fig_dir), showWarnings = TRUE, recursive=TRUE)
 file.list = paste0("results/rds/part2/hi100/", list.files("results/rds/part2/hi100/"))
 
-method.nums = c(1:11)
+method.nums = c(1:3, 7, 11, 4,6,5, 8,10,9)
 method.names = c("Lasso","Forward stepwise",
-                 "Relaxed lasso",
-                 "LS-CRI","LS-CRI.Z","LS-CAR","LS-SIS",
-                 "Ridge-CRI","Ridge-CRI.Z","Ridge-CAR","Ridge-SIS")
-pch = c(rep(19, 3), rep(15, 3), 19, rep(15, 3), 19)
+                 "Relaxed lasso","LS-SIS","Ridge-SIS",
+                 "LS-CRI","LS-CAR","LS-CRI.Z",
+                 "Ridge-CRI","Ridge-CAR","Ridge-CRI.Z")
+pch = c(rep(19, 5), rep(15, 6))
 
 plot.from.file.mod(file.list, what="error", rel.to=NULL, tuning="val",
                    method.nums=method.nums, method.names=method.names,

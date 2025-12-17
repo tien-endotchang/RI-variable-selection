@@ -6,7 +6,7 @@
 # --------------------------------------------------------------------------
 rm(list=ls())
 
-base_dir = "G:/其他電腦/我的筆記型電腦/PhD/Journal Paper/CRI-feature-selection/RI-variable-selection_backup/results/rds"  
+base_dir = "results/rds"  
 output_dir = "results/tab"
 parts = c("part1", "part2")
 levels = c("lo", "med", "hi50", "hi100")
@@ -27,7 +27,7 @@ for(i in 1:length(parts)){
     count = 0
     for(k in 1:length(rds_files)){
       obj = readRDS(rds_files[k])
-      count = count + colMeans(matrix(unlist(obj$runtime), ncol=length(obj$runtime))) / length(rds_files)
+      count = count + colMeans(matrix(unlist(obj$runtime), ncol=length(obj$runtime))) * 1000 / length(rds_files)
     }
     res[j, names(obj$runtime)] = count
   }

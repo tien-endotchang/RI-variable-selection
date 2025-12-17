@@ -132,15 +132,17 @@ cbbPalette = c("Best subset" = "#F8766D75",
                "Ridge-CAR" = "#99CCFF",
                "Ridge-SIS" = "#FFCC0075"
 )
-dat = data.frame(x=rep(0:p,8),
-                 y=c(df.bs,df.fs,df.las[,1],df.las[,5],df.las[,9],
-                     df.lscri,df.lscriz,df.lssis),
-                 Method=factor(rep(c("Best subset","Forward stepwise","Lasso",
-                                     "Relaxed lasso: 0.5","Relaxed lasso: 0",
-                                     "LS-CRI", "LS-CRI.Z","LS-SIS"),
-                                    rep(p+1,8))))
 
-shape_set = c(rep(19, 3), rep(15, 2), rep(19, 3))
+methods.names = c("Best subset","Forward stepwise","Lasso",
+                  "Relaxed lasso: 0.5","Relaxed lasso: 0","LS-SIS",
+                  "LS-CRI", "LS-CRI.Z")
+dat = data.frame(x=rep(0:p,8),
+                 y=c(df.bs,df.fs,df.las[,1],df.las[,5],df.las[,9],df.lssis,
+                     df.lscri,df.lscriz),
+                 Method=factor(rep(methods.names,
+                                    rep(p+1,8)), levels=methods.names))
+
+shape_set = c(rep(19, 6), rep(15, 2))
 ggplot(dat, aes(x=x,y=y,color=Method,shape=Method)) +
   xlab("Number of nonzero coefficients") +
   ylab("Degrees of freedom") +

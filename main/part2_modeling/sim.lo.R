@@ -110,11 +110,11 @@ for(f in file.list){
 }
 file.list = setdiff(file.list, remove.list)
 
-method.nums = c(1:8, 11)
+method.nums = c(1:4, 8, 5:7, 11)
 method.names = c("Best subset","Lasso","Forward stepwise",
-                 "Relaxed lasso",
-                 "LS-GD","LS-CRI","LS-CRI.Z","LS-SIS", "Ridge-CRI.Z")
-pch = c(rep(19, 4), rep(15, 3), 19, 15)
+                 "Relaxed lasso","LS-SIS",
+                 "LS-GD","LS-CRI","LS-CRI.Z", "Ridge-CRI.Z")
+pch = c(rep(19, 5), rep(15, 4))
 
 plot.from.file.mod(file.list, what="error", rel.to=NULL, tuning="val",
                    method.nums=method.nums, method.names=method.names,
@@ -134,12 +134,12 @@ fig_dir = sprintf("results/fig/part2/")
 dir.create(file.path(fig_dir), showWarnings = TRUE, recursive=TRUE)
 file.list = paste0("results/rds/part2/lo/", list.files("results/rds/part2/lo/"))
 
-method.nums = c(1:12)
+method.nums = c(1:4, 8, 12, 5:7, 9:11)
 method.names = c("Best subset","Lasso","Forward stepwise",
-                 "Relaxed lasso",
-                 "LS-GD","LS-CRI","LS-CRI.Z","LS-SIS",
-                 "Ridge-GD","Ridge-CRI","Ridge-CRI.Z","Ridge-SIS")
-pch = c(rep(19, 4), rep(15, 3), 19, rep(15, 3), 19)
+                 "Relaxed lasso","LS-SIS","Ridge-SIS",
+                 "LS-GD","LS-CRI","LS-CRI.Z",
+                 "Ridge-GD","Ridge-CRI","Ridge-CRI.Z")
+pch = c(rep(19, 6), rep(15, 6))
 
 plot.from.file.mod(file.list, what="error", rel.to=NULL, tuning="val",
                    method.nums=method.nums, method.names=method.names,

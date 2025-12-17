@@ -182,8 +182,8 @@ run.realdata = function(x, y, reg.funs, nrep=50, seed=NULL, verbose=FALSE,
 }
 
 base.dir = "data/"
-datasets = c("aml", "gli_85")
-foldername = paste0("results/tab")
+datasets = c("leukemia", "gli_85")
+foldername = paste0("results/tab/")
 dir.create(file.path(foldername), showWarnings = TRUE, recursive=TRUE)
 nrep = 100
 seed = 42
@@ -225,9 +225,8 @@ for(i in 1:length(datasets)){
     }else{
       z = run.obj[[metrics[j]]]
       res = matrix(unlist(z), ncol=length(reg.funs))
-      tab[, j] = paste0(round(colMeans(res), 2), " (", round(apply(res, 2, sd) / sqrt(nrep), 2), ")")
+      tab[, j] = paste0(round(colMeans(res*1000), 2), " (", round(apply(res*1000, 2, sd) / sqrt(nrep), 2), ")")
     }
   }
-  write.table(tab, paste0(foldername, "res.", datasets[i], ".csv"), sep=",",
-              row.names = TRUE, col.names = TRUE) 
+  write.csv(tab, paste0(foldername, "res.", datasets[i], ".csv")) 
 }
