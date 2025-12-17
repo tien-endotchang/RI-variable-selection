@@ -83,7 +83,7 @@ We utilize two benchmark gene expression datasets:
 1.  **Leukemia:** `(n,p)=(72,7129)` from Golub et al. (Science, 1999)
 2.  **GLI_85:** `(n,p)=(85,22283)` from Freije et al. (Cancer Research, 2004)
 
-*Original data obtained from the [Arizona State University Feature Selection Repository](http://featureselection.asu.edu/).*
+*Original data obtained from the [Arizona Scikit-Feature Feature Selection Repository](http://featureselection.asu.edu/).*
 
 Run the analysis:
 ```r
