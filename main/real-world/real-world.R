@@ -199,6 +199,9 @@ for(i in 1:length(datasets)){
   
   reg.funs[["Relaxed lasso"]] = function(x,y) lasso(x, y, intercept = T, nrelax = 10, nlam = 2*nrow(x))
   
+  reg.funs[["SCAD"]] = function(x,y) ncvreg_2d(x, y, penalty = "SCAD", intercept = T, nlam = 2*nrow(x))
+  reg.funs[["MCP"]] = function(x,y) ncvreg_2d(x, y, penalty = "MCP", intercept = T, nlam = 2*nrow(x))
+  
   reg.funs[["LS-CRI"]] = function(x,y) lscri(x, y, intercept = T)
   reg.funs[["LS-CRI.Z"]] = function(x,y) lscriz(x, y, intercept = T)
   reg.funs[["LS-CAR"]] = function(x,y) lscar(x, y, intercept = T)

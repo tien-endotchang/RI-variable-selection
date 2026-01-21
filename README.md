@@ -4,7 +4,7 @@ This repository contains the codes and data for the paper:
 
 **Tien-En Chang & Argon Chen (2025). Variable Selection Using Relative Importance Rankings.**  
 
-We propose a class of filter-based variable selection methods built on **Relative Importance (RI)** measures, including General Dominance (GD), Comprehensive Relative Importance (CRI), and a *new*, *computationally efficient* variant, **CRI.Z**. Our methods are robust to multicollinearity and competitive with state-of-the-art approaches like the lasso and relaxed lasso.
+We propose a class of filter-based variable selection methods built on **Relative Importance (RI)** measures, including General Dominance (GD), Comprehensive Relative Importance (CRI), and a *newly* proposed RI measure, **CRI.Z**, with improved *computational efficiency* relative to conventional RI measures. Our methods are robust to multicollinearity and competitive with state-of-the-art approaches like the lasso and relaxed lasso.
 
 ---
 
@@ -13,11 +13,11 @@ We propose a class of filter-based variable selection methods built on **Relativ
 ### Prerequisites
 Make sure you have the following installed:
 *  **R version:** 4.4.1 (2024-06-14 ucrt)
-*  **Dependencies:** `glmnet`, `relaimpo`, `care`, `ggplot2`, `ggh4x` etc.
+*  **Dependencies:** `glmnet`, `relaimpo`, `care`, `ggplot2`, `ggh4x`, `ncvreg` etc.
 
     You can install all required packages with:
     ```r
-    install.packages(c("glmnet", "relaimpo", "care", "ggplot2", "ggh4x"))
+    install.packages(c("glmnet", "relaimpo", "care", "ggplot2", "ggh4x", "ncvreg"))
     ```
 * Make sure to set your working directory `~/RI-variable-selection/`.
 
